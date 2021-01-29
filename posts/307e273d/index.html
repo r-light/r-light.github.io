@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="策略者模式策略者模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。 设计原则：  找出需要变化的部分和不变的部分，将它们分离出来。  针对接口编程，而不是针对实现编程。   看不懂也没关系，接下来看例子去理解就好。 我们的公司准备开发一个鸭子游戏，里面有各种各样的鸭子。 游戏初期-继承公司初步的想法是鸭子作为一个超类，不同种类的鸭子作为子类。 抽象超类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HeadFirst">
+<meta property="og:url" content="http://example.com/posts/307e273d/index.html">
+<meta property="og:site_name" content="求知">
+<meta property="og:description" content="策略者模式策略者模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。 设计原则：  找出需要变化的部分和不变的部分，将它们分离出来。  针对接口编程，而不是针对实现编程。   看不懂也没关系，接下来看例子去理解就好。 我们的公司准备开发一个鸭子游戏，里面有各种各样的鸭子。 游戏初期-继承公司初步的想法是鸭子作为一个超类，不同种类的鸭子作为子类。 抽象超类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190702210421481-1252766385.png">
+<meta property="og:image" content="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190702213933397-1842339339.png">
+<meta property="og:image" content="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190703071402991-1614944029.png">
+<meta property="article:published_time" content="2021-01-29T12:27:53.000Z">
+<meta property="article:modified_time" content="2021-01-29T14:19:36.422Z">
+<meta property="article:author" content="Zehui Jiao">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190702210421481-1252766385.png">
+
+<link rel="canonical" href="http://example.com/posts/307e273d/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HeadFirst | 求知</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">求知</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/307e273d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jfif">
+      <meta itemprop="name" content="Zehui Jiao">
+      <meta itemprop="description" content="醉后不知天在水 满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="求知">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HeadFirst
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-29 20:27:53 / 修改时间：22:19:36" itemprop="dateCreated datePublished" datetime="2021-01-29T20:27:53+08:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="策略者模式"><a href="#策略者模式" class="headerlink" title="策略者模式"></a>策略者模式</h1><p>策略者模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<p>设计原则：</p>
+<ol>
+<li><p>找出需要变化的部分和不变的部分，将它们分离出来。</p>
+</li>
+<li><p>针对接口编程，而不是针对实现编程。</p>
+</li>
+</ol>
+<p>看不懂也没关系，接下来看例子去理解就好。</p>
+<p>我们的公司准备开发一个鸭子游戏，里面有各种各样的鸭子。</p>
+<h2 id="游戏初期-继承"><a href="#游戏初期-继承" class="headerlink" title="游戏初期-继承"></a>游戏初期-继承</h2><p>公司初步的想法是鸭子作为一个超类，不同种类的鸭子作为子类。</p>
+<p>抽象超类的<strong>方法</strong>有</p>
+<ul>
+<li>swim()</li>
+<li>quack()</li>
+<li>display()</li>
+</ul>
+<p>其中display是<strong>抽象方法</strong>，意思就是说每个种类的鸭子的外貌都不同。</p>
+<p>swim和quack是每个鸭子都会的行为，所以我们在超类里面实现。</p>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190702210421481-1252766385.png" alt="img"></p>
+<p>结果公司在你设计完之后突然提出了<strong>新的需求</strong>，爆肝或者氪金可以让你的鸭子<strong>会飞</strong>，所以我们要设计fly()方法。</p>
+<p>fly()这个方法如果<strong>放在超类</strong>的话，就会导致所有鸭子都有飞翔的功能，如果只<strong>放在子类</strong>单独实现的话，不仅代码不能复用，也不符合设计原则。</p>
+<p>所以我们想出一个曲线救国的方法，超类仍然实现fly()方法，然后在不能飞的鸭子类中重写fly()方法。这样解决了问题。当然缺点很明显，每次设计一个新的鸭子时，我们都要去<strong>考虑他能不能飞</strong>，如果不能，就需要去重写fly()方法。你可能觉得这也不麻烦啊，可是这里我们只有fly()一个方法需要考虑，如果说有十个方法都需要这样操作，就很容易遗漏。虽然缺点明显，但是还是决定这样操作，毕竟目前来看它的代价最小。</p>
+<h2 id="游戏中期-接口"><a href="#游戏中期-接口" class="headerlink" title="游戏中期-接口"></a>游戏中期-接口</h2><p>在你想用上面的操作摸鱼蒙混过关了，公司又给你出了难题。</p>
+<p>策划决定<strong>不同的鸭子叫声也可以不同</strong>，也就是quack()方法，这里注意一下，quack()和display()方法的区别。quack方法是<strong>不同子类可能会是同一种叫声</strong>，比如鸭子叫声只有嘎嘎叫、呱呱叫、吱吱叫三种；而<strong>display方法则是不同子类都不同</strong>，也就是说不同类的鸭子长相一定不同。</p>
+<p>所以display方法可以是抽象方法，因为<strong>每个子类都一定会重写这个方法</strong>。而quack方法因为很多子类是同一种叫声，如果<strong>用抽象方法，首先无法完成代码复用，其次是修改会很麻烦</strong>。比方说我们想把嘎嘎叫改成嘎嘎嘎叫，那么我们需要检查所有子类，去检查子类是否是嘎嘎叫。</p>
+<p>所以我们决定重新设计模式，<strong>前面的方案作废</strong>，我们突然想到了接口，如果把fly和quack方法都设计成为接口呢，需要这个接口我们直接实现接口方法就可以了。</p>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190702213933397-1842339339.png" alt="img"></p>
+<p>理想很丰满，但是现实问题是，<strong>接口一定都是抽象方法</strong>(java8之后接口可以有静态方法和默认方法)，对于fly接口，可能有些作用，不能飞行的类我们不实现fly接口就可以。但是对于quack接口，不同的子类如果有同样的叫声，还是没办法实现代码复用。所以单纯的接口对我们也不合适。</p>
+<h2 id="策略者模式-1"><a href="#策略者模式-1" class="headerlink" title="策略者模式"></a>策略者模式</h2><p>我们现在重新进行思考设计原则：</p>
+<ol>
+<li><p>找出需要变化的部分和不变的部分，将它们分离出来。</p>
+</li>
+<li><p>针对接口编程，而不是针对实现编程。</p>
+</li>
+</ol>
+<p>抽象超类的<strong>方法</strong>有</p>
+<ul>
+<li>swim() 每个鸭子都会</li>
+<li>quack() 每个鸭子都能叫，叫声的种类是有限的，不同种类鸭子叫声也可能相同</li>
+<li>display() 每个鸭子的外貌都是不同的</li>
+<li>fly() 有的鸭子能飞，有的鸭子不能飞</li>
+</ul>
+<p>在这个例子中，需要变化的部分其实就是fly、quack和display方法</p>
+<ul>
+<li>swim() 设计在超类中，每个子类都自动继承</li>
+<li>quack() 设计为接口，每种叫声作为一个类实现该接口</li>
+<li>display() 设计在超类中，作为抽象方法，每个子类必须重写</li>
+<li>fly() 设计为接口，能飞和不能飞作为两个类实现该接口</li>
+</ul>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190703071402991-1614944029.png" alt="img"></p>
+<p>感觉和之前的接口差不太多，只是给接口增加了几个实现类，<strong>他们的区别在于</strong>，之前我们每个子类都会去实现接口，而现在我们把两个接口作为成员变量，利用setter方法来实现成员变量的赋值。也就是说此时接口的行为类和鸭子类已经独立，二者之间不会相互影响。后期我们可以随时给接口增加新的行为类，鸭子类则可以通过setter方法随时更改行为鸭子的行为。</p>
+<p>代码：</p>
+<p>成员变量：两个行为接口IFlyBehaviro、IQuackBehaviro</p>
+<p>成员方法：</p>
+<ul>
+<li>Display()</li>
+<li>Swim()</li>
+<li>performFly()</li>
+<li>performQuack()</li>
+<li>setPerformFly(IFlyBehaviro fb)</li>
+<li>setPerformQuack(IQuackBehaviro qb)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehaviro iFlyBehaviro;</span><br><span class="line">    <span class="keyword">private</span> IQuackBehaviro iQueackBehaviro;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Display</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Swim</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performFly</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iFlyBehaviro.fly();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performQuack</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iQueackBehaviro.quack();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPerformFly</span><span class="params">(IFlyBehaviro fb)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iFlyBehaviro = fb;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPerformQuack</span><span class="params">(IQuackBehaviro qb)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iQueackBehaviro = qb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ModelDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ModelDuck</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iFlyBehaviro = <span class="keyword">new</span> DuckNoFly();</span><br><span class="line">        iQueackBehaviro = <span class="keyword">new</span> DuckNoQueck();</span><br><span class="line">    &#125;          </span><br><span class="line">    <span class="function"><span class="keyword">public</span> override <span class="keyword">void</span> <span class="title">Display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;我是一只木头鸭子&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>总结:</p>
+<p><strong>设计原则：多用组合，少用继承。</strong></p>
+<p>策略者模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<p>设计原则：</p>
+<ol>
+<li><p>找出需要变化的部分和不变的部分，将它们分离出来。</p>
+</li>
+<li><p>针对接口编程，而不是针对实现编程。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/1fa5b27a/" rel="prev" title="java-数据类型">
+      <i class="fa fa-chevron-left"></i> java-数据类型
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">策略者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%88%9D%E6%9C%9F-%E7%BB%A7%E6%89%BF"><span class="nav-number">1.1.</span> <span class="nav-text">游戏初期-继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E4%B8%AD%E6%9C%9F-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text">游戏中期-接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%80%85%E6%A8%A1%E5%BC%8F-1"><span class="nav-number">1.3.</span> <span class="nav-text">策略者模式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zehui Jiao"
+      src="/images/avatar.jfif">
+  <p class="site-author-name" itemprop="name">Zehui Jiao</p>
+  <div class="site-description" itemprop="description">醉后不知天在水 满船清梦压星河</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/r-light" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;r-light" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:414271394@qq.com" title="E-Mail → mailto:414271394@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="author" itemprop="copyrightHolder">Zehui Jiao</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">10k</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

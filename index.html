@@ -191,6 +191,253 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/307e273d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jfif">
+      <meta itemprop="name" content="Zehui Jiao">
+      <meta itemprop="description" content="醉后不知天在水 满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="求知">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/307e273d/" class="post-title-link" itemprop="url">HeadFirst</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-29 20:27:53 / 修改时间：22:19:36" itemprop="dateCreated datePublished" datetime="2021-01-29T20:27:53+08:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="策略者模式"><a href="#策略者模式" class="headerlink" title="策略者模式"></a>策略者模式</h1><p>策略者模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<p>设计原则：</p>
+<ol>
+<li><p>找出需要变化的部分和不变的部分，将它们分离出来。</p>
+</li>
+<li><p>针对接口编程，而不是针对实现编程。</p>
+</li>
+</ol>
+<p>看不懂也没关系，接下来看例子去理解就好。</p>
+<p>我们的公司准备开发一个鸭子游戏，里面有各种各样的鸭子。</p>
+<h2 id="游戏初期-继承"><a href="#游戏初期-继承" class="headerlink" title="游戏初期-继承"></a>游戏初期-继承</h2><p>公司初步的想法是鸭子作为一个超类，不同种类的鸭子作为子类。</p>
+<p>抽象超类的<strong>方法</strong>有</p>
+<ul>
+<li>swim()</li>
+<li>quack()</li>
+<li>display()</li>
+</ul>
+<p>其中display是<strong>抽象方法</strong>，意思就是说每个种类的鸭子的外貌都不同。</p>
+<p>swim和quack是每个鸭子都会的行为，所以我们在超类里面实现。</p>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190702210421481-1252766385.png" alt="img"></p>
+<p>结果公司在你设计完之后突然提出了<strong>新的需求</strong>，爆肝或者氪金可以让你的鸭子<strong>会飞</strong>，所以我们要设计fly()方法。</p>
+<p>fly()这个方法如果<strong>放在超类</strong>的话，就会导致所有鸭子都有飞翔的功能，如果只<strong>放在子类</strong>单独实现的话，不仅代码不能复用，也不符合设计原则。</p>
+<p>所以我们想出一个曲线救国的方法，超类仍然实现fly()方法，然后在不能飞的鸭子类中重写fly()方法。这样解决了问题。当然缺点很明显，每次设计一个新的鸭子时，我们都要去<strong>考虑他能不能飞</strong>，如果不能，就需要去重写fly()方法。你可能觉得这也不麻烦啊，可是这里我们只有fly()一个方法需要考虑，如果说有十个方法都需要这样操作，就很容易遗漏。虽然缺点明显，但是还是决定这样操作，毕竟目前来看它的代价最小。</p>
+<h2 id="游戏中期-接口"><a href="#游戏中期-接口" class="headerlink" title="游戏中期-接口"></a>游戏中期-接口</h2><p>在你想用上面的操作摸鱼蒙混过关了，公司又给你出了难题。</p>
+<p>策划决定<strong>不同的鸭子叫声也可以不同</strong>，也就是quack()方法，这里注意一下，quack()和display()方法的区别。quack方法是<strong>不同子类可能会是同一种叫声</strong>，比如鸭子叫声只有嘎嘎叫、呱呱叫、吱吱叫三种；而<strong>display方法则是不同子类都不同</strong>，也就是说不同类的鸭子长相一定不同。</p>
+<p>所以display方法可以是抽象方法，因为<strong>每个子类都一定会重写这个方法</strong>。而quack方法因为很多子类是同一种叫声，如果<strong>用抽象方法，首先无法完成代码复用，其次是修改会很麻烦</strong>。比方说我们想把嘎嘎叫改成嘎嘎嘎叫，那么我们需要检查所有子类，去检查子类是否是嘎嘎叫。</p>
+<p>所以我们决定重新设计模式，<strong>前面的方案作废</strong>，我们突然想到了接口，如果把fly和quack方法都设计成为接口呢，需要这个接口我们直接实现接口方法就可以了。</p>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190702213933397-1842339339.png" alt="img"></p>
+<p>理想很丰满，但是现实问题是，<strong>接口一定都是抽象方法</strong>(java8之后接口可以有静态方法和默认方法)，对于fly接口，可能有些作用，不能飞行的类我们不实现fly接口就可以。但是对于quack接口，不同的子类如果有同样的叫声，还是没办法实现代码复用。所以单纯的接口对我们也不合适。</p>
+<h2 id="策略者模式-1"><a href="#策略者模式-1" class="headerlink" title="策略者模式"></a>策略者模式</h2><p>我们现在重新进行思考设计原则：</p>
+<ol>
+<li><p>找出需要变化的部分和不变的部分，将它们分离出来。</p>
+</li>
+<li><p>针对接口编程，而不是针对实现编程。</p>
+</li>
+</ol>
+<p>抽象超类的<strong>方法</strong>有</p>
+<ul>
+<li>swim() 每个鸭子都会</li>
+<li>quack() 每个鸭子都能叫，叫声的种类是有限的，不同种类鸭子叫声也可能相同</li>
+<li>display() 每个鸭子的外貌都是不同的</li>
+<li>fly() 有的鸭子能飞，有的鸭子不能飞</li>
+</ul>
+<p>在这个例子中，需要变化的部分其实就是fly、quack和display方法</p>
+<ul>
+<li>swim() 设计在超类中，每个子类都自动继承</li>
+<li>quack() 设计为接口，每种叫声作为一个类实现该接口</li>
+<li>display() 设计在超类中，作为抽象方法，每个子类必须重写</li>
+<li>fly() 设计为接口，能飞和不能飞作为两个类实现该接口</li>
+</ul>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/1290605-20190703071402991-1614944029.png" alt="img"></p>
+<p>感觉和之前的接口差不太多，只是给接口增加了几个实现类，<strong>他们的区别在于</strong>，之前我们每个子类都会去实现接口，而现在我们把两个接口作为成员变量，利用setter方法来实现成员变量的赋值。也就是说此时接口的行为类和鸭子类已经独立，二者之间不会相互影响。后期我们可以随时给接口增加新的行为类，鸭子类则可以通过setter方法随时更改行为鸭子的行为。</p>
+<p>代码：</p>
+<p>成员变量：两个行为接口IFlyBehaviro、IQuackBehaviro</p>
+<p>成员方法：</p>
+<ul>
+<li>Display()</li>
+<li>Swim()</li>
+<li>performFly()</li>
+<li>performQuack()</li>
+<li>setPerformFly(IFlyBehaviro fb)</li>
+<li>setPerformQuack(IQuackBehaviro qb)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehaviro iFlyBehaviro;</span><br><span class="line">    <span class="keyword">private</span> IQuackBehaviro iQueackBehaviro;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Display</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Swim</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performFly</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iFlyBehaviro.fly();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performQuack</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iQueackBehaviro.quack();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPerformFly</span><span class="params">(IFlyBehaviro fb)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iFlyBehaviro = fb;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPerformQuack</span><span class="params">(IQuackBehaviro qb)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iQueackBehaviro = qb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ModelDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ModelDuck</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        iFlyBehaviro = <span class="keyword">new</span> DuckNoFly();</span><br><span class="line">        iQueackBehaviro = <span class="keyword">new</span> DuckNoQueck();</span><br><span class="line">    &#125;          </span><br><span class="line">    <span class="function"><span class="keyword">public</span> override <span class="keyword">void</span> <span class="title">Display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;我是一只木头鸭子&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>总结:</p>
+<p><strong>设计原则：多用组合，少用继承。</strong></p>
+<p>策略者模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<p>设计原则：</p>
+<ol>
+<li><p>找出需要变化的部分和不变的部分，将它们分离出来。</p>
+</li>
+<li><p>针对接口编程，而不是针对实现编程。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/1fa5b27a/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jfif">
+      <meta itemprop="name" content="Zehui Jiao">
+      <meta itemprop="description" content="醉后不知天在水 满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="求知">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/1fa5b27a/" class="post-title-link" itemprop="url">java-数据类型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-15 17:32:48 / 修改时间：21:53:06" itemprop="dateCreated datePublished" datetime="2021-01-15T17:32:48+08:00">2021-01-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>599</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h1><p>长整型数值有一个后缀 L 或 1 ( 如 4000000000L)</p>
+<p>十六进制数值有一个前缀 0x 或 0X (如0xCAFE)</p>
+<p>八进制有一个前缀 0 , 例如， 010 对应八进制中的 8</p>
+<p>八进制表示法比较容易混淆， 所以建议最好不要使用八进制常数</p>
+<p>从 Java 7 开始， 加上前缀 0b 或 0B 就可以写二进制数。 例如，0b1001就是 9</p>
+<p>从Java 7 开始，还可以为数字字面量加下划线，如1_000_000</p>
+<p>Java 没有任何无符号（unsigned) 形式的 int、 long、 short 或 byte 类型</p>
+<h1 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h1><p>float 类型的数值有一个后缀 F 或 f (例如， 3.14F)</p>
+<p>没有后缀 F 的浮点数值（如 3.14 ) 默认为 double 类型。</p>
+<p>当然，也可以在浮点数值后面添加后缀 D 或 d (例如，3.14D)</p>
+<p>三种特殊的浮点数</p>
+<ul>
+<li>正无穷大</li>
+<li>负无穷大</li>
+<li>NaN</li>
+</ul>
+<h2 id="strictfp"><a href="#strictfp" class="headerlink" title="strictfp"></a>strictfp</h2><p>对于使用 strictfp 关键字标记的方法必须使用严格的浮点计算来生成可再生的结果</p>
+<p>如果将一个类标记为strictfp, 这个类中的所有方法都要使用严格的浮点计算</p>
+<h1 id="char类型"><a href="#char类型" class="headerlink" title="char类型"></a>char类型</h1><p>Java的char内部编码为UTF-16</p>
+<p>有些 Unicode字符可以用一个 char描述， 另外一些 Unicode 字符则需要两个 char 值</p>
+<h1 id="boolean-类型"><a href="#boolean-类型" class="headerlink" title="boolean 类型"></a>boolean 类型</h1><p>boolean (布尔）类型有两个值：false 和 true, 用来判定逻辑条件 整型值和布尔值之间不能进行相互转换</p>
+<h1 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h1><p>enum Size { SMALL, MEDIUM, LARGE, EXTRA .LARCE };</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/posts/6d9ec411/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,7 +463,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-15 17:23:30 / 修改时间：17:27:01" itemprop="dateCreated datePublished" datetime="2021-01-15T17:23:30+08:00">2021-01-15</time>
+              <time title="创建时间：2021-01-15 17:23:30 / 修改时间：17:27:19" itemprop="dateCreated datePublished" datetime="2021-01-15T17:23:30+08:00">2021-01-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -553,20 +800,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -607,7 +854,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">7k</span>
+    <span title="站点总字数">10k</span>
 </div>
 
         
