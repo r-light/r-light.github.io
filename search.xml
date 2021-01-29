@@ -110,7 +110,7 @@
       </tags>
   </entry>
   <entry>
-    <title>HeadFirst</title>
+    <title>JAVA设计模式之一:策略者模式</title>
     <url>/posts/307e273d/</url>
     <content><![CDATA[<h1 id="策略者模式"><a href="#策略者模式" class="headerlink" title="策略者模式"></a>策略者模式</h1><p>策略者模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
 <p>设计原则：</p>
