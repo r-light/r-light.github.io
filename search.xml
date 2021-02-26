@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>java成神之路一:面向对象</title>
+    <title>java成神之路二</title>
+    <url>/posts/44a512e1/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java成神之路一:基础篇</title>
     <url>/posts/678055aa/</url>
     <content><![CDATA[<h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><p><strong>概述: 将事务高度抽象化的编程模式</strong></p>
 <p>将问题分解成一个一个步骤，对每个步骤进行相应的抽象，形成对象，通过不同对象之间的调用，组合解决问题。</p>
@@ -134,6 +145,107 @@
 </ul>
 <h4 id="值传递"><a href="#值传递" class="headerlink" title="值传递"></a>值传递</h4><p><strong>原始参数通过值传递给方法。这意味着对参数值的任何更改都只存在于方法的范围内。当方法返回时，参数将消失，对它们的任何更改都将丢失。</strong></p>
 <p><strong>引用数据类型参数(如对象)也按值传递给方法。这意味着，当方法返回时，传入的引用仍然引用与以前相同的对象。但是，如果对象字段具有适当的访问级别，则可以在方法中更改这些字段的值。</strong></p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h4 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h4><p>Java中有8种基本数据类型分为三大类。</p>
+<p>**字符型 **char</p>
+<p>**布尔型 **boolean</p>
+<p>**数值型 **byte short int long float double</p>
+<p>​        byte：byte用1个字节来存储，范围为-128(-2^7)到127(2^7-1)，在变量初始化的时候，byte类型的默认值为0。</p>
+<p>　　short：short用2个字节存储，范围为-32,768 (-2^15)到32,767 (2^15-1)，在变量初始化的时候，short类型的默认值为0，一般情况下，因为Java本身转型的原因，可以直接写为0。</p>
+<p>　　int：int用4个字节存储，范围为-2,147,483,648 (-2^31)到2,147,483,647 (2^31-1)，在变量初始化的时候，int类型的默认值为0。</p>
+<p>　　long：long用8个字节存储，范围为-9,223,372,036,854,775,808 (-2^63)到9,223,372,036, 854,775,807 (2^63-1)，在变量初始化的时候，long类型的默认值为0L或0l，也可直接写为0。</p>
+<p>​        单精度浮点数在计算机存储器中占用4个字节（32 bits），利用“浮点”（浮动小数点）的方法，可以表示一个范围很大的数值。</p>
+<p>​        比起单精度浮点数，双精度浮点数(double)使用 64 位（8字节） 来存储一个浮点数。</p>
+<h4 id="自动拆装箱"><a href="#自动拆装箱" class="headerlink" title="自动拆装箱"></a>自动拆装箱</h4><table>
+<thead>
+<tr>
+<th>基本数据类型</th>
+<th>包装类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>Byte</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>short</td>
+<td>Short</td>
+</tr>
+<tr>
+<td>char</td>
+<td>Character</td>
+</tr>
+<tr>
+<td>int</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+</tr>
+</tbody></table>
+<p>如果一个变量p的值是：</p>
+<p>-128至127之间的整数</p>
+<p>true 和 false的布尔值 </p>
+<p>‘\u0000’至 ‘\u007f’之间的字符中时，将p包装成a和b两个对象时，可以直接使用a==b判断a和b的值是否相等。</p>
+<p>在定义一个布尔类型的变量，尤其是一个给外部提供的接口返回值时，要使用success来命名，阿里巴巴Java开发手册建议使用封装类来定义POJO和RPC返回值中的变量。但是这不意味着可以随意的使用null，我们还是要尽量避免出现对null的处理的。</p>
+<h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><p>字符串不可变。</p>
+<h5 id="substring"><a href="#substring" class="headerlink" title="substring"></a><strong>substring</strong></h5><p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/string-immutability1-650x303.jpeg"></p>
+<h5 id="JDK6"><a href="#JDK6" class="headerlink" title="JDK6"></a><strong>JDK6</strong></h5><p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/string-substring-jdk6-650x389.jpeg" alt="string-substring-jdk6"></p>
+<h5 id="JDK7"><a href="#JDK7" class="headerlink" title="JDK7"></a><strong>JDK7</strong></h5><p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/string-substring-jdk71-650x389.jpeg" alt="string-substring-jdk7"></p>
+<h5 id="replaceFirst、replaceAll、replace区别"><a href="#replaceFirst、replaceAll、replace区别" class="headerlink" title="replaceFirst、replaceAll、replace区别"></a><strong>replaceFirst、replaceAll、replace区别</strong></h5><p>replace、replaceAll和replaceFirst是Java中常用的替换字符的方法,它们的方法定义是：</p>
+<p>replace(CharSequence target, CharSequence replacement) ，用replacement替换所有的target，两个参数都是字符串。</p>
+<p>replaceAll(String regex, String replacement) ，用replacement替换所有的regex匹配项，regex很明显是个正则表达式，replacement是字符串。</p>
+<p>replaceFirst(String regex, String replacement) ，基本和replaceAll相同，区别是只替换第一个匹配项。</p>
+<p>可以看到，其中replaceAll以及replaceFirst是和正则表达式有关的，而replace和正则表达式无关。</p>
+<p>replaceAll和replaceFirst的区别主要是替换的内容不同，replaceAll是替换所有匹配的字符，而replaceFirst()仅替换第一次出现的字符</p>
+<h5 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a><strong>字符串拼接</strong></h5><p>Java中的<code>+</code>对字符串的拼接，其实现原理是使用<code>StringBuilder.append</code>。</p>
+<p>经过concat方法，其实是new了一个新的String。</p>
+<p>和<code>String</code>类类似，<code>StringBuilder</code>类也封装了一个字符数组 </p>
+<p>append会直接拷贝字符到内部的字符数组中，如果字符数组长度不够，会进行扩展。</p>
+<p><code>StringBuffer</code>和<code>StringBuilder</code>类似，最大的区别就是<code>StringBuffer</code>是线程安全的，看一下<code>StringBuffer</code>的<code>append</code>方法。</p>
+<p>通过查看<code>StringUtils.join</code>的源代码，我们可以发现，其实他也是通过<code>StringBuilder</code>来实现的。</p>
+<p>StringBuilder<code>&lt;</code>StringBuffer<code>&lt;</code>concat<code>&lt;</code>+<code>&lt;</code>StringUtils.join</p>
+<p><code>StringBuffer</code>在<code>StringBuilder</code>的基础上，做了同步处理，所以在耗时上会相对多一些。</p>
+<h5 id="switch"><a href="#switch" class="headerlink" title="switch"></a><strong>switch</strong></h5><p>字符串的switch是通过<code>equals()</code>和<code>hashCode()</code>方法来实现的。<strong>记住，switch中只能使用整型</strong>，比如<code>byte</code>。<code>short</code>，<code>char</code>(ackii码是整型)以及<code>int</code>。还好<code>hashCode()</code>方法返回的是<code>int</code>，而不是<code>long</code>。通过这个很容易记住<code>hashCode</code>返回的是<code>int</code>这个事实。</p>
+<p>仔细看下可以发现，进行<code>switch</code>的实际是哈希值，然后通过使用equals方法比较进行安全检查，这个检查是必要的，因为哈希可能会发生碰撞。因此它的性能是不如使用枚举进行switch或者使用纯整数常量，但这也不是很差。因为Java编译器只增加了一个<code>equals</code>方法，如果你比较的是字符串字面量的话会非常快，比如”abc” ==”abc”。</p>
+<h5 id="字符串池"><a href="#字符串池" class="headerlink" title="字符串池"></a>字符串池</h5><p>String作为一个Java类，可以通过以下两种方式创建一个字符串：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">String str &#x3D; &quot;Hollis&quot;;</span><br><span class="line"></span><br><span class="line">String str &#x3D; new String(&quot;Hollis&quot;)；复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>而第一种是我们比较常用的做法，这种形式叫做”字面量”。</p>
+<p>在JVM中，为了减少相同的字符串的重复创建，为了达到节省内存的目的。会单独开辟一块内存，用于保存字符串常量，这个内存区域被叫做字符串常量池。</p>
+<p>当代码中出现双引号形式（字面量）创建字符串对象时，JVM 会先对这个字符串进行检查，如果字符串常量池中存在相同内容的字符串对象的引用，则将这个引用返回；否则，创建新的字符串对象，然后将这个引用放入字符串常量池，并返回该引用。</p>
+<p>这种机制，就是字符串驻留或池化。</p>
+<p>在JDK 7以前的版本中，字符串常量池是放在永久代中的。</p>
+<p>因为按照计划，JDK会在后续的版本中通过元空间来代替永久代，所以首先在JDK 7中，将字符串常量池先从永久代中移出，暂时放到了堆内存中。</p>
+<p>在JDK 8中，彻底移除了永久代，使用元空间替代了永久代，于是字符串常量池再次从堆内存移动到永久代中。</p>
+<h5 id="Class常量池"><a href="#Class常量池" class="headerlink" title="Class常量池"></a>Class常量池</h5><p>在Java体系中，共用三种常量池。分别是<strong>字符串常量池</strong>、<strong>Class常量池</strong>和<strong>运行时常量池</strong>。</p>
+<p>Class常量池可以理解为是Class文件中的资源仓库。 Class文件中除了包含<strong>类的版本、字段、方法、接口</strong>等描述信息外，还有一项信息就是<strong>常量池(constant pool table)**，用于存放编译器生成的各种</strong>字面量(Literal)和符号引用(Symbolic References)**。</p>
+<p>由于不同的Class文件中包含的常量的个数是不固定的，所以在Class文件的常量池入口处会设置两个字节的常量池容量计数器，记录了常量池中常量的个数。</p>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/15401192359009.jpg" alt="-w697"></p>
+<p>常量池中主要存放两大类常量：字面量（literal）和符号引用（symbolic references）。</p>
+<p>字面量就是指由字母、数字等构成的字符串或者数值。</p>
+<p>符号引用是编译原理中的概念，是相对于直接引用来说的。主要包括了以下三类常量： * 类和接口的全限定名 * 字段的名称和描述符 * 方法的名称和描述符。</p>
+<p><strong>作用</strong></p>
+<p>Class是用来保存常量的一个媒介场所，并且是一个中间场所。在JVM真的运行时，需要把常量池中的常量加载到内存中。</p>
+<h5 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h5><p>运行时常量池（ Runtime Constant Pool）是每一个类或接口的常量池（ Constant_Pool）的运行时表示形式。</p>
+<p>它包括了若干种不同的常量：从编译期可知的数值字面量到必须运行期解析后才能获得的方法或字段引用。运行时常量池扮演了类似传统语言中符号表（ SymbolTable）的角色，不过它存储数据范围比通常意义上的符号表要更为广泛。</p>
+<p>每一个运行时常量池都分配在 Java 虚拟机的方法区之中，在类和接口被加载到虚拟机后，对应的运行时常量池就被创建出来。</p>
+<p>在JDK 1.7之前，方法区位于堆内存的永久代中，运行时常量池作为方法区的一部分，也处于永久代中。</p>
+<p>因为使用永久代实现方法区可能导致内存泄露问题，所以，从JDK1.7开始，JVM尝试解决这一问题，在1.7中，将原本位于永久代中的运行时常量池移动到堆内存中。（永久代在JDK 1.7并没有完全移除，只是原来方法区中的运行时常量池、类的静态变量等移动到了堆内存中。）</p>
+<p>在JDK 1.8中，彻底移除了永久代，方法区通过元空间的方式实现。随之，运行时常量池也在元空间中实现。</p>
+<p>Class常量池只是一个媒介场所。在JVM真的运行时，需要把常量池中的常量加载到内存中，进入到运行时常量池。</p>
+<p>字符串常量池可以理解为运行时常量池分出来的部分。加载时，对于class的静态常量池，如果字符串会被装到字符串常量池中。</p>
 ]]></content>
       <categories>
         <category>java</category>
