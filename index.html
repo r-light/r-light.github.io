@@ -191,6 +191,211 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/678055aa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jfif">
+      <meta itemprop="name" content="Zehui Jiao">
+      <meta itemprop="description" content="醉后不知天在水 满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="求知">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/678055aa/" class="post-title-link" itemprop="url">java成神之路一:面向对象</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-26 12:18:20 / 修改时间：17:43:42" itemprop="dateCreated datePublished" datetime="2021-02-26T12:18:20+08:00">2021-02-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><p><strong>概述: 将事务高度抽象化的编程模式</strong></p>
+<p>将问题分解成一个一个步骤，对每个步骤进行相应的抽象，形成对象，通过不同对象之间的调用，组合解决问题。</p>
+<p>就是说，在进行面向对象进行编程的时候，要把属性、行为等封装成对象，然后基于这些对象及对象的能力进行业务逻辑的实现。</p>
+<h3 id="面向对象三大基本特征"><a href="#面向对象三大基本特征" class="headerlink" title="面向对象三大基本特征"></a>面向对象三大基本特征</h3><h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>封装，也就是把客观事物封装成抽象的类，并且类可以把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏。封装是面向对象的特征之一，是对象和类概念的主要特性。</p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>继承是指这样一种能力：它可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。通过继承创建的新类称为“子类”或“派生类”，被继承的类称为“基类”、“父类”或“超类”。继承的过程，就是从一般到特殊的过程。要实现继承，可以通过“继承”（Inheritance）和“组合”（Composition）来实现。继承概念的实现方式有二类：实现继承与接口继承。实现继承是指直接使用基类的属性和方法而无需额外编码的能力；接口继承是指仅使用属性和方法的名称、但是子类必须提供实现的能力；</p>
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>所谓多态就是指一个类实例的相同方法在不同情形有不同表现形式。多态机制使具有不同内部结构的对象可以共享相同的外部接口。这意味着，虽然针对不同对象的具体操作不同，但通过一个公共的类，它们（那些操作）可以通过相同的方式予以调用。</p>
+<p>最常见的多态就是将子类传入父类参数中，运行时调用父类方法时通过传入的子类决定具体的内部结构或行为。</p>
+<h3 id="面向对象的五大基本原则"><a href="#面向对象的五大基本原则" class="headerlink" title="面向对象的五大基本原则"></a>面向对象的五大基本原则</h3><h4 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h4><p>其核心思想为：一个类，最好只做一件事，只有一个引起它的变化。单一职责原则可以看做是低耦合、高内聚在面向对象原则上的引申，将职责定义为引起变化的原因，以提高内聚性来减少引起变化的原因。职责过多，可能引起它变化的原因就越多，这将导致职责依赖，相互之间就产生影响，从而大大损伤其内聚性和耦合度。</p>
+<h4 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h4><p>其核心思想是：软件实体应该是可扩展的，而不可修改的。也就是，对扩展开放，对修改封闭的。开放封闭原则主要体现在两个方面1、对扩展开放，意味着有新的需求或变化时，可以对现有代码进行扩展，以适应新的情况。2、对修改封闭，意味着类一旦设计完成，就可以独立完成其工作，而不要对其进行任何尝试的修改。 实现开放封闭原则的核心思想就是对抽象编程，而不对具体编程，因为抽象相对稳定。让类依赖于固定的抽象，所以修改就是封闭的；而通过面向对象的继承和多态机制，又可以实现对抽象类的继承，通过覆写其方法来改变固有行为，实现新的拓展方法，所以就是开放的。</p>
+<h4 id="Liskov替换原则"><a href="#Liskov替换原则" class="headerlink" title="Liskov替换原则"></a>Liskov替换原则</h4><p>其核心思想是：子类必须能够替换其基类。这一思想体现为对继承机制的约束规范，只有子类能够替换基类时，才能保证系统在运行期内识别子类，这是保证继承复用的基础。在父类和子类的具体行为中，必须严格把握继承层次中的关系和特征，将基类替换为子类，程序的行为不会发生任何变化。同时，这一约束反过来则是不成立的，子类可以替换基类，但是基类不一定能替换子类。 </p>
+<h4 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h4><p>其核心思想是：依赖于抽象。具体而言就是高层模块不依赖于底层模块，二者都同依赖于抽象；抽象不依赖于具体，具体依赖于抽象。 我们知道，依赖一定会存在于类与类、模块与模块之间。当两个模块之间存在紧密的耦合关系时，最好的方法就是分离接口和实现：在依赖之间定义一个抽象的接口使得高层模块调用接口，而底层模块实现接口的定义，以此来有效控制耦合关系，达到依赖于抽象的设计目标。 抽象的稳定性决定了系统的稳定性，因为抽象是不变的，依赖于抽象是面向对象设计的精髓，也是依赖倒置原则的核心。 依赖于抽象是一个通用的原则，而某些时候依赖于细节则是在所难免的，必须权衡在抽象和具体之间的取舍，方法不是一层不变的。依赖于抽象，就是对接口编程，不要对实现编程。</p>
+<h4 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h4><p>其核心思想是：使用多个小的专门的接口，而不要使用一个大的总接口。 具体而言，接口隔离原则体现在：接口应该是内聚的，应该避免“胖”接口。一个类对另外一个类的依赖应该建立在最小的接口上，不要强迫依赖不用的方法，这是一种接口污染。 接口有效地将细节和抽象隔离，体现了对抽象编程的一切好处，接口隔离强调接口的单一性。</p>
+<h3 id="封装继承多态"><a href="#封装继承多态" class="headerlink" title="封装继承多态"></a>封装继承多态</h3><h4 id="多态-1"><a href="#多态-1" class="headerlink" title="多态"></a>多态</h4><p>为了实现运行期的多态，或者说是动态绑定，需要满足三个条件。</p>
+<p>即有类继承或者接口实现、子类要重写父类的方法、父类的引用指向子类的对象。</p>
+<p>简单来一段代码解释下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;I&#x27;m Parent&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Parent p1 = <span class="keyword">new</span> Son();</span><br><span class="line">        Parent p2 = <span class="keyword">new</span> Daughter();</span><br><span class="line">        p1.call();</span><br><span class="line">        p2.call();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;I&#x27;m Son&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Daughter</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;I&#x27;m daughter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这样，就实现了多态，同样是Parent类的实例，p.call 调用的是Son类的实现、p1.call调用的是Daughter的实现。</p>
+<h4 id="重载和重写"><a href="#重载和重写" class="headerlink" title="重载和重写"></a>重载和重写</h4><ol>
+<li><p>重载是一个编译期概念、重写是一个运行期间概念。</p>
+</li>
+<li><p>重载遵循所谓“编译期绑定”，即在编译时根据参数变量的类型判断应该调用哪个方法。</p>
+</li>
+<li><p>重写遵循所谓“运行期绑定”，即在运行的时候，根据引用变量所指向的实际对象的类型来调用方法</p>
+</li>
+<li><p>因为在编译期已经确定调用哪个方法，所以重载并不是多态。而重写是多态。重载只是一种语言特性，是一种语法规则，与多态无关，与面向对象也无关。（注：严格来说，重载是编译时多态，即静态多态。但是，Java中提到的多态，在不特别说明的情况下都指动态多态）</p>
+</li>
+</ol>
+<p><strong>重写的条件</strong></p>
+<ul>
+<li><p><strong>参数列表必须完全与被重写方法的相同；</strong></p>
+</li>
+<li><p><strong>返回类型必须完全与被重写方法的返回类型相同，或者范围更小</strong></p>
+</li>
+<li><p><strong>访问级别的限制性一定不能比被重写方法的强；</strong></p>
+</li>
+<li><p><strong>访问级别的限制性可以比被重写方法的弱；</strong></p>
+</li>
+<li><p><strong>重写方法一定不能抛出新的检查异常或比被重写的方法声明的检查异常更广泛的检查异常</strong></p>
+</li>
+<li><p><strong>重写的方法能够抛出更少或更有限的异常（也就是说，被重写的方法声明了异常，但重写的方法可以什么也不声明）</strong></p>
+</li>
+<li><p><strong>不能重写被标示为final的方法；</strong></p>
+</li>
+<li><p><strong>如果不能继承一个方法，则不能重写这个方法。</strong></p>
+</li>
+</ul>
+<p><strong>重载的条件</strong></p>
+<ul>
+<li><p><strong>被重载的方法必须改变参数列表；</strong></p>
+</li>
+<li><p><strong>被重载的方法可以改变返回类型(但是不能只改变返回类型)；</strong></p>
+</li>
+<li><p><strong>被重载的方法可以改变访问修饰符；</strong></p>
+</li>
+<li><p><strong>被重载的方法可以声明新的或更广的检查异常；</strong></p>
+</li>
+<li><p><strong>方法能够在同一个类中或者在一个子类中被重载。</strong></p>
+</li>
+</ul>
+<h4 id="继承与实现"><a href="#继承与实现" class="headerlink" title="继承与实现"></a>继承与实现</h4><p>继承的根本原因是因为要<em>复用</em>，而实现的根本原因是需要定义一个<em>标准</em>。</p>
+<p>在Java中，继承使用<code>extends</code>关键字实现，而实现通过<code>implements</code>关键字。</p>
+<p>Java中支持一个类同时实现多个接口，但是不支持同时继承多个类。</p>
+<p>在接口中只能定义全局常量（static final）和无实现的方法（Java 8以后可以有defult方法）；而在继承中可以定义属性方法,变量,常量等。</p>
+<h4 id="继承与组合"><a href="#继承与组合" class="headerlink" title="继承与组合"></a>继承与组合</h4><p>长期大量的使用继承会给代码带来很高的维护成本。</p>
+<p>继承（Inheritance）是一种联结类与类的层次模型。指的是一个类（称为子类、子接口）继承另外的一个类（称为父类、父接口）的功能，并可以增加它自己的新功能的能力，继承是类与类或者接口与接口之间最常见的关系。继承是一种<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Is-a"><code>is-a</code></a>关系。</p>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/Generalization.jpg" alt="Inheritance"></p>
+<p>组合(Composition)体现的是整体与部分、拥有的关系，即<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Has-a"><code>has-a</code></a>的关系。</p>
+<p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/Composition.jpg" alt="Composition"></p>
+<p>在<code>继承</code>结构中，父类的内部细节对于子类是可见的。所以我们通常也可以说通过继承的代码复用是一种<code>白盒式代码复用</code>。<strong>（如果基类的实现发生改变，那么派生类的实现也将随之改变。这样就导致了子类行为的不可预知性；）</strong></p>
+<p><code>组合</code>是通过对现有的对象进行拼装（组合）产生新的、更复杂的功能。因为在对象之间，各自的内部细节是不可见的，所以我们也说这种方式的代码复用是<code>黑盒式代码复用</code>。<strong>（因为组合中一般都定义一个类型，所以在编译期根本不知道具体会调用哪个实现类的方法</strong>）</p>
+<p><code>继承</code>，在写代码的时候就要指名具体继承哪个类，所以，在<code>编译期</code>就确定了关系。<strong>（从基类继承来的实现是无法在运行期动态改变的，因此降低了应用的灵活性。）</strong></p>
+<p><code>组合</code>，在写代码的时候可以采用面向接口编程。<strong>所以，类的组合关系一般在<code>运行期</code>确定。</strong></p>
+<table>
+<thead>
+<tr>
+<th>组 合 关 系</th>
+<th>继 承 关 系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>优点：不破坏封装，整体类与局部类之间松耦合，彼此相对独立</td>
+<td>缺点：破坏封装，子类与父类之间紧密耦合，子类依赖于父类的实现，子类缺乏独立性</td>
+</tr>
+<tr>
+<td>优点：具有较好的可扩展性</td>
+<td>缺点：支持扩展，但是往往以增加系统结构的复杂度为代价</td>
+</tr>
+<tr>
+<td>优点：支持动态组合。在运行时，整体对象可以选择不同类型的局部对象</td>
+<td>缺点：不支持动态继承。在运行时，子类无法选择不同的父类</td>
+</tr>
+<tr>
+<td>优点：整体类可以对局部类进行包装，封装局部类的接口，提供新的接口</td>
+<td>缺点：子类不能改变父类的接口</td>
+</tr>
+<tr>
+<td>缺点：整体类不能自动获得和局部类同样的接口</td>
+<td>优点：子类能自动继承父类的接口</td>
+</tr>
+<tr>
+<td>缺点：创建整体类的对象时，需要创建所有局部类的对象</td>
+<td>优点：创建子类的对象时，无须创建父类的对象</td>
+</tr>
+</tbody></table>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><p>构造函数，是一种特殊的方法。 主要用来在创建对象时初始化对象， 即为对象成员变量赋初始值，总与new运算符一起使用在创建对象的语句中。 特别的一个类可以有多个构造函数，可根据其参数个数的不同或参数类型的不同来区分它们即构造函数的重载。</p>
+<p>构造函数跟一般的实例方法十分相似；但是与其它方法不同，构造器没有返回类型，不会被继承，且可以有范围修饰符。构造器的函数名称必须和它所属的类的名称相同。 它承担着初始化对象数据成员的任务。</p>
+<p>如果在编写一个可实例化的类时没有专门编写构造函数，多数编程语言会自动生成缺省构造器（默认构造函数）。默认构造函数一般会把成员变量的值初始化为默认值，如int -&gt; 0，Integer -&gt; null。</p>
+<p>执行父类静态代码 执行子类静态代码<br>按顺序执行代码块和父类成员变量赋值语句<br>初始化父类构造函数<br>按顺序执行代码块和子类成员变量赋值语句<br>初始化子类构造函数</p>
+<h4 id="类变量、成员变量、局部变量"><a href="#类变量、成员变量、局部变量" class="headerlink" title="类变量、成员变量、局部变量"></a>类变量、成员变量、局部变量</h4><p>Java中共有三种变量，分别是类变量、成员变量和局部变量。他们分别存放在JVM的方法区、堆内存和栈内存中。</p>
+<h3 id="作用域修饰符"><a href="#作用域修饰符" class="headerlink" title="作用域修饰符"></a>作用域修饰符</h3><p>对于成员变量和方法的作用域，public，protected，private以及不写之间的区别：</p>
+<p><code>public</code> : 表明该成员变量或者方法是对所有类或者对象都是可见的,所有类或者对象都可以直接访问</p>
+<p><code>private</code> : 表明该成员变量或者方法是私有的,只有当前类对其具有访问权限,除此之外其他类或者对象都没有访问权限.子类也没有访问权限.</p>
+<p><code>protected</code> : 表明成员变量或者方法对类自身,与同在一个包中的其他类可见,其他包下的类不可访问,除非是他的子类</p>
+<p><code>default</code> : 表明该成员变量或者方法只有自己和其位于同一个包的内可见,其他包内的类不能访问,即便是它的子类</p>
+<h3 id="平台无关性"><a href="#平台无关性" class="headerlink" title="平台无关性"></a>平台无关性</h3><p><img src="https://jzh-markdown-pics.oss-cn-beijing.aliyuncs.com/img/15539289530245.jpg" alt="img"></p>
+<ul>
+<li>java语言规范<ul>
+<li>通过规定Java语言中基本数据类型的取值范围和行为</li>
+</ul>
+</li>
+<li>Class文件<ul>
+<li>所有Java文件要编译成统一的Class文件</li>
+</ul>
+</li>
+<li>Java虚拟机<ul>
+<li>通过Java虚拟机将Class文件转成对应平台的二进制文件等</li>
+</ul>
+</li>
+</ul>
+<h4 id="值传递"><a href="#值传递" class="headerlink" title="值传递"></a>值传递</h4><p><strong>原始参数通过值传递给方法。这意味着对参数值的任何更改都只存在于方法的范围内。当方法返回时，参数将消失，对它们的任何更改都将丢失。</strong></p>
+<p><strong>引用数据类型参数(如对象)也按值传递给方法。这意味着，当方法返回时，传入的引用仍然引用与以前相同的对象。但是，如果对象字段具有适当的访问级别，则可以在方法中更改这些字段的值。</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/posts/1c53329c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -965,7 +1170,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1019,7 +1224,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">23k</span>
+    <span title="站点总字数">27k</span>
 </div>
 
         
