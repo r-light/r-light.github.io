@@ -312,7 +312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-06 15:46:18" itemprop="dateModified" datetime="2021-03-06T15:46:18+08:00">2021-03-06</time>
+                <time title="修改时间：2021-03-06 19:21:20" itemprop="dateModified" datetime="2021-03-06T19:21:20+08:00">2021-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -330,7 +330,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>31k</span>
+              <span>37k</span>
             </span>
 
         </div>
@@ -797,6 +797,76 @@
 <h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>Exception和 Error， ⼆者都是 Java异常处理的重要⼦类， 各⾃都包含⼤量⼦类。均继承自Throwable类。</p>
 <p>Error表⽰系统级的错误， 是java运⾏环境内部错误或者硬件问题， 不能指望程序来处理这样的问题， 除了退出运⾏外别⽆选择， 它是Java虚拟机抛出的。</p>
 <p>Exception 表⽰程序需要捕捉、 需要处理的常， 是由与程序设计的不完善⽽出现的问题， 程序必须处理的问题。</p>
+<h3 id="异常类型"><a href="#异常类型" class="headerlink" title="异常类型"></a>异常类型</h3><p>Java中的异常， 主要可以分为两⼤类， 即受检异常（ checked exception） 和 非受检异常（ unchecked exception）</p>
+<h4 id="受检异常"><a href="#受检异常" class="headerlink" title="受检异常"></a>受检异常</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> throw new Exception</span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>那么，当我们在程序中调用他的时候， ⼀定要对该异常进⾏处理（ 捕获或者向上抛出） ， 否则是⽆法编译通过的。 这是⼀种强制规范。</p>
+<h4 id="非受检异常"><a href="#非受检异常" class="headerlink" title="非受检异常"></a>非受检异常</h4><p>对于非受检异常来说， ⼀般是运⾏时异常， 继承⾃RuntimeException。 在编写代码的时候， 不需要显⽰的捕获，但是如果不捕获， 在运⾏期如果发⽣异常就会中断程序的执⾏。</p>
+<p>这种异常⼀般可以理解为是代码原因导致的。 ⽐如发⽣空指针、 数组越界等。 所以， 只要代码写的没问题， 这些异常都是可以避免的。 也就不需要我们显⽰的进⾏处理。</p>
+<p>试想⼀下， 如果你要对所有可能发⽣空指针的地⽅做异常处理的话， 那相当于你的所有代码都需要做这件事。</p>
+<h3 id="关键字-1"><a href="#关键字-1" class="headerlink" title="关键字"></a>关键字</h3><p>throws、 throw、 try、 catch、 finally</p>
+<p>try⽤来指定⼀块预防所有异常的程序；</p>
+<p>catch⼦句紧跟在try块后⾯， ⽤来指定你想要捕获的异常的类型；</p>
+<p>finally为确保⼀段代码不管发⽣什么异常状况都要被执⾏；</p>
+<p>throw语句⽤来明确地抛出⼀个异常；</p>
+<p>throws⽤来声明⼀个⽅法可能抛出的各种异常；</p>
+<h2 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h2><h4 id="万国码"><a href="#万国码" class="headerlink" title="万国码"></a>万国码</h4><p>Unicode 是容纳世界所有文字符号的国际标准编码，使用四个字节为每个字符编码。</p>
+<p>UTF 是英文 Unicode Transformation Format 的缩写，意为把 Unicode 字符转换为某种格式。UTF 系列编码方案（UTF-8、UTF-16、UTF-32）均是由 Unicode 编码方案衍变而来，以适应不同的数据存储或传递，它们都可以完全表示 Unicode 标准中的所有字符。目前，这些衍变方案中 UTF-8 被广泛使用，而 UTF-16 和 UTF-32 则很少被使用。</p>
+<p>UTF-8 使用一至四个字节为每个字符编码，其中大部分汉字采用三个字节编码，少量不常用汉字采用四个字节编码。因为 UTF-8 是可变长度的编码方式，相对于 Unicode 编码可以减少存储占用的空间，所以被广泛使用。</p>
+<p>UTF-16 使用二或四个字节为每个字符编码，其中大部分汉字采用两个字节编码，少量不常用汉字采用四个字节编码。UTF-16 编码有大尾序和小尾序之别，即 UTF-16BE 和 UTF-16LE，在编码前会放置一个 U+FEFF 或 U+FFFE（UTF-16BE 以 FEFF 代表，UTF-16LE 以 FFFE 代表），其中 U+FEFF 字符在 Unicode 中代表的意义是 ZERO WIDTH NO-BREAK SPACE，顾名思义，它是个没有宽度也没有断字的空白。</p>
+<p>UTF-32 使用四个字节为每个字符编码，使得 UTF-32 占用空间通常会是其它编码的二到四倍。UTF-32 与 UTF-16 一样有大尾序和小尾序之别，编码前会放置 U+0000FEFF 或 U+0000FFFE 以区分。</p>
+<h4 id="中文编码"><a href="#中文编码" class="headerlink" title="中文编码"></a>中文编码</h4><p>三者都是支持中文字符的编码方式，最常用的是GBK。</p>
+<p>GB2312（1980年）：16位字符集，收录有6763个简体汉字，682个符号，共7445个字符； 优点：适用于简体中文环境，属于中国国家标准，通行于大陆，新加坡等地也使用此编码； 缺点：不兼容繁体中文，其汉字集合过少。</p>
+<p>GBK（1995年）：16位字符集，收录有21003个汉字，883个符号，共21886个字符； 优点：适用于简繁中文共存的环境，为简体Windows所使用（代码页cp936），向下完全兼容gb2312，向上支持 ISO-10646 国际标准 ；所有字符都可以一对一映射到unicode2.0上； 缺点：不属于官方标准，和big5之间需要转换；很多搜索引擎都不能很好地支持GBK汉字。</p>
+<p>GB18030（2000年）：32位字符集；收录了27484个汉字，同时收录了藏文、蒙文、维吾尔文等主要的少数民族文字。 优点：可以收录所有你能想到的文字和符号，属于中国最新的国家标准； 缺点：目前支持它的软件较少。</p>
+<h2 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h2><h3 id="语法糖-1"><a href="#语法糖-1" class="headerlink" title="语法糖"></a>语法糖</h3><p>语法糖（Syntactic Sugar），也称糖衣语法，是由英国计算机学家 Peter.J.Landin 发明的一个术语，指在计算机语言中添加的某种语法，这种语法对语言的功能并没有影响，但是更方便程序员使用。简而言之，语法糖让程序更加简洁，有更高的可读性。</p>
+<h3 id="switch-支持-String-与枚举"><a href="#switch-支持-String-与枚举" class="headerlink" title="switch 支持 String 与枚举"></a>switch 支持 String 与枚举</h3><p>Java 7中<code>switch</code>开始支持<code>String</code>。</p>
+<p>在开始coding之前先科普下，Java中的<code>switch</code>自身原本就支持基本类型。比如<code>int</code>、<code>char</code>等。对于<code>int</code>类型，直接进行数值的比较。对于<code>char</code>类型则是比较其ascii码。所以，对于编译器来说，<code>switch</code>中其实只能使用整型，任何类型的比较都要转换成整型。比如<code>byte</code>。<code>short</code>，<code>char</code>(ackii码是整型)以及<code>int</code>。</p>
+<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><p><strong>对于Java虚拟机来说，他根本不认识<code>Map&lt;String, String&gt; map</code>这样的语法。需要在编译阶段通过类型擦除的方式进行解语法糖。</strong></p>
+<p>类型擦除的主要过程如下： 1.将所有的泛型参数用其最左边界（最顶级的父类型）类型替换。 2.移除所有的类型参数。</p>
+<h3 id="自动拆装箱-1"><a href="#自动拆装箱-1" class="headerlink" title="自动拆装箱"></a>自动拆装箱</h3><p>自动装箱就是Java自动将原始类型值转换成对应的对象，比如将int的变量转换成Integer对象，这个过程叫做装箱，反之将Integer对象转换成int类型值，这个过程叫做拆箱。因为这里的装箱和拆箱是自动进行的非人为转换，所以就称作为自动装箱和拆箱。原始类型byte, short, char, int, long, float, double 和 boolean 对应的封装类为Byte, Short, Character, Integer, Long, Float, Double, Boolean。</p>
+<p>所以，装箱过程是通过调用包装器的valueOf方法实现的，而拆箱过程是通过调用包装器的 xxxValue方法实现的。</p>
+<h3 id="变长参数"><a href="#变长参数" class="headerlink" title="变长参数"></a>变长参数</h3><p>可变参数(<code>variable arguments</code>)是在Java 1.5中引入的一个特性。它允许一个方法把任意数量的值作为参数。</p>
+<p>看下以下可变参数代码，其中print方法接收可变参数：</p>
+<h3 id="枚举-1"><a href="#枚举-1" class="headerlink" title="枚举"></a>枚举</h3><p>Java SE5提供了一种新的类型-Java的枚举类型，关键字<code>enum</code>可以将一组具名的值的有限集合创建为一种新的类型，而这些具名的值可以作为常规的程序组件使用，这是一种非常有用的功能。</p>
+<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>内部类又称为嵌套类，可以把内部类理解为外部类的一个普通成员。</p>
+<p><strong>内部类之所以也是语法糖，是因为它仅仅是一个编译时的概念，<code>outer.java</code>里面定义了一个内部类<code>inner</code>，一旦编译成功，就会生成两个完全不同的<code>.class</code>文件了，分别是<code>outer.class</code>和<code>outer$inner.class</code>。所以内部类的名字完全可以和它的外部类名字相同。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class OutterClass &#123;</span><br><span class="line">    private String userName;</span><br><span class="line"></span><br><span class="line">    public String getUserName() &#123;</span><br><span class="line">        return userName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUserName(String userName) &#123;</span><br><span class="line">        this.userName &#x3D; userName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class InnerClass&#123;</span><br><span class="line">        private String name;</span><br><span class="line"></span><br><span class="line">        public String getName() &#123;</span><br><span class="line">            return name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void setName(String name) &#123;</span><br><span class="line">            this.name &#x3D; name;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h3><p><strong>Java语法的条件编译，是通过判断条件为常量的if语句实现的。其原理也是Java语言的语法糖。根据if判断条件的真假，编译器直接把分支为false的代码块消除。通过该方式实现的条件编译，必须在方法体内实现，而无法在正整个Java类的结构或者类的属性上进行条件编译，这与C/C++的条件编译相比，确实更有局限性。在Java语言设计之初并没有引入条件编译的功能，虽有局限，但是总比没有更强。</strong></p>
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>在Java中，<code>assert</code>关键字是从JAVA SE 1.4 引入的，为了避免和老版本的Java代码中使用了<code>assert</code>关键字导致错误，Java在执行的时候默认是不启动断言检查的（这个时候，所有的断言语句都将忽略！），如果要开启断言检查，则需要用开关<code>-enableassertions</code>或<code>-ea</code>来开启。</p>
+<p><strong>其实断言的底层实现就是if语言，如果断言结果为true，则什么都不做，程序继续执行，如果断言结果为false，则程序抛出AssertError来打断程序的执行。</strong><code>-enableassertions</code>会设置$assertionsDisabled字段的值。</p>
+<h3 id="数值字面量"><a href="#数值字面量" class="headerlink" title="数值字面量"></a>数值字面量</h3><p>在java 7中，数值字面量，不管是整数还是浮点数，都允许在数字之间插入任意多个下划线。这些下划线不会对字面量的数值产生影响，目的就是方便阅读。</p>
+<h3 id="for-each"><a href="#for-each" class="headerlink" title="for-each"></a>for-each</h3><p>增强for循环（<code>for-each</code>）<strong>for-each的实现原理其实就是使用了普通的for循环和迭代器。</strong></p>
+<h3 id="try-with-resource"><a href="#try-with-resource" class="headerlink" title="try-with-resource"></a>try-with-resource</h3><p>ava里，对于文件操作IO流、数据库连接等开销非常昂贵的资源，用完之后必须及时通过close方法将其关闭，否则资源会一直处于打开状态，可能会导致内存泄露等问题。</p>
+<p>关闭资源的常用方式就是在<code>finally</code>块里是释放，即调用<code>close</code>方法。比如，我们经常会写这样的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    BufferedReader br = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String line;</span><br><span class="line">        br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">&quot;d:\\hollischuang.xml&quot;</span>));</span><br><span class="line">        <span class="keyword">while</span> ((line = br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(line);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="comment">// handle exception</span></span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (br != <span class="keyword">null</span>) &#123;</span><br><span class="line">                br.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">            <span class="comment">// handle exception</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从Java 7开始，jdk提供了一种更好的方式关闭资源，使用<code>try-with-resources</code>语句，改写一下上面的代码，效果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> (BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">&quot;d:\\ hollischuang.xml&quot;</span>))) &#123;</span><br><span class="line">        String line;</span><br><span class="line">        <span class="keyword">while</span> ((line = br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(line);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="comment">// handle exception</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h3><p>关于lambda表达式，有人可能会有质疑，因为网上有人说他并不是语法糖。其实我想纠正下这个说法。<strong>Labmda表达式不是匿名内部类的语法糖，但是他也是一个语法糖。实现方式其实是依赖了几个JVM底层提供的lambda相关api。</strong></p>
+<h3 id="java8"><a href="#java8" class="headerlink" title="java8"></a>java8</h3><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(parameters) -&gt; expression</span><br><span class="line">或</span><br><span class="line">(parameters) -&gt;&#123; statements; &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可选类型声明：不需要声明参数类型，编译器可以统一识别参数值。</li>
+<li>可选的参数圆括号：一个参数无需定义圆括号，但多个参数需要定义圆括号。</li>
+<li>可选的大括号：如果主体包含了一个语句，就不需要使用大括号。</li>
+<li>可选的返回关键字：如果主体只有一个表达式返回值则编译器会自动返回值，大括号需要指定明表达式返回了一个数值。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 不需要参数,返回值为 5  </span></span><br><span class="line">() -&gt; <span class="number">5</span>  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 2. 接收一个参数(数字类型),返回其2倍的值  </span></span><br><span class="line">x -&gt; <span class="number">2</span> * x  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 3. 接受2个参数(数字),并返回他们的差值  </span></span><br><span class="line">(x, y) -&gt; x – y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 4. 接收2个int型整数,返回他们的和  </span></span><br><span class="line">(<span class="keyword">int</span> x, <span class="keyword">int</span> y) -&gt; x + y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  </span></span><br><span class="line">(String s) -&gt; System.out.print(s)</span><br></pre></td></tr></table></figure>
+<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><p>在旧版的 Java 中，日期时间 API 存在诸多问题，其中有：</p>
+<ul>
+<li>非线程安全 − java.util.Date 是非线程安全的，所有的日期类都是可变的，这是Java日期类最大的问题之一。</li>
+<li>设计很差 − Java的日期/时间类的定义并不一致，在java.util和java.sql的包中都有日期类，此外用于格式化和解析的类在java.text包中定义。java.util.Date同时包含日期和时间，而java.sql.Date仅包含日期，将其纳入java.sql包并不合理。另外这两个类都有相同的名字，这本身就是一个非常糟糕的设计。</li>
+<li>时区处理麻烦 − 日期类并不提供国际化，没有时区支持，因此Java引入了java.util.Calendar和java.util.TimeZone类，但他们同样存在上述所有的问题。</li>
+</ul>
+<p>在Java8中， 新的时间及⽇期API位于java.time包中， 该包中有：</p>
+<p><code>Instant</code>： 时间戳</p>
+<p><code>Duration</code>： 持续时间， 时间差</p>
+<p><code>LocalDate</code>： 只包含⽇期， ⽐如： 2016-10-20</p>
+<p><code>LocalTime</code>： 只包含时间， ⽐如： 23</p>
+<p><code>LocalDateTime</code>： 包含⽇期和时间， ⽐如： 2016-10-20 23</p>
+<p><code>Period</code>： 时间段</p>
+<p><code>ZoneOffset</code>： 时区偏移量， ⽐如： +8:00</p>
+<p><code>ZonedDateTime</code>： 带时区的时间</p>
+<p><code>Clock</code>： 时钟， ⽐如获取⽬前美国纽约的时间 </p>
+<h4 id="获取当前时间"><a href="#获取当前时间" class="headerlink" title="获取当前时间"></a>获取当前时间</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LocalDate today = LocalDate.now();</span><br><span class="line"><span class="keyword">int</span> year = today.getYear();</span><br><span class="line"><span class="keyword">int</span> month = today.getMonthValue();</span><br><span class="line"><span class="keyword">int</span> day = today.getDayOfMonth();</span><br><span class="line">System.out.printf(<span class="string">&quot;Year : %d Month : %d day : %d t %n&quot;</span>, year,month, day);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1710,7 +1780,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">84k</span>
+    <span title="站点总字数">90k</span>
 </div>
 
         
