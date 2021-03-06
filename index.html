@@ -191,6 +191,139 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/7ff4b686/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jfif">
+      <meta itemprop="name" content="Zehui Jiao">
+      <meta itemprop="description" content="醉后不知天在水 满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="求知">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/7ff4b686/" class="post-title-link" itemprop="url">JavaCode</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-06 19:29:17 / 修改时间：21:23:26" itemprop="dateCreated datePublished" datetime="2021-03-06T19:29:17+08:00">2021-03-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.8k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>final:不能被继承</p>
+<p>该类实现了三个接口：<code>java.io.Serializable</code>、 <code>Comparable&lt;String&gt;</code>、 <code>CharSequence</code></p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">char</span> value[];</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> hash;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">6849794470754667710L</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ObjectStreamField[] serialPersistentFields = <span class="keyword">new</span> ObjectStreamField[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<p>一个字符数组，并且是final类型，他用于存储字符串内容，从fianl这个关键字中我们可以看出，String的内容一旦被初始化了是不能被更改的。String其实就是用char[]实现的。</p>
+<p>缓存字符串的hash Code，默认值为 0。</p>
+<p>因为<code>String</code>实现了<code>Serializable</code>接口，所以支持序列化和反序列化支持。Java的序列化机制是通过在运行时判断类的<code>serialVersionUID</code>来验证版本一致性的。在进行反序列化时，JVM会把传来的字节流中的<code>serialVersionUID</code>与本地相应实体（类）的<code>serialVersionUID</code>进行比较，如果相同就认为是一致的，可以进行反序列化，否则就会出现序列化版本不一致的异常(<code>InvalidCastException</code>)</p>
+<p>。</p>
+<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><h3 id="使用字符数组、字符串构造一个String"><a href="#使用字符数组、字符串构造一个String" class="headerlink" title="使用字符数组、字符串构造一个String"></a><strong>使用字符数组、字符串构造一个String</strong></h3><p><strong>当我们使用字符数组创建String的时候，会用到<code>Arrays.copyOf</code>方法和<code>Arrays.copyOfRange</code>方法。这两个方法是将原有的字符数组中的内容逐一的复制到String中的字符数组中。</strong>同样，我们也可以用一个String类型的对象来初始化一个String。</p>
+<p>同样，我们也可以用一个String类型的对象来初始化一个String。这里将直接将<code>源String</code>中的<code>value</code>和<code>hash</code>两个属性直接赋值给<code>目标String</code>。</p>
+<h3 id="使用字节数组构造一个String"><a href="#使用字节数组构造一个String" class="headerlink" title="使用字节数组构造一个String"></a>使用字节数组构造一个String</h3><p>在Java中，String实例中保存有一个<code>char[]</code>字符数组，<code>char[]</code>字符数组是以unicode码来存储的，String 和 char 为内存形式，byte是网络传输或存储的序列化形式。所以在很多传输和存储的过程中需要将byte[]数组和String进行相互转化。所以，String提供了一系列重载的构造方法来将一个字符数组转化成String，提到byte[]和String之间的相互转换就不得不关注编码问题。**<code>String(byte[] bytes, Charset charset)</code>是指通过charset来解码指定的byte数组，将其解码成unicode的char[]数组，够造成新的String。**</p>
+<p>如果我们在使用byte[]构造String的时候，使用的是(带有<code>charsetName</code>或者<code>charset</code>参数)的一种的话，那么就会使用<code>StringCoding.decode</code>方法进行解码，使用的解码的字符集就是我们指定的<code>charsetName</code>或者<code>charset</code>。 我们在使用byte[]构造String的时候，如果没有指明解码使用的字符集的话，那么<code>StringCoding</code>的<code>decode</code>方法首先调用系统的默认编码格式，如果没有指定编码格式则默认使用<strong>ISO-8859-1</strong>编码格式进行编码操作。</p>
+<h3 id="使用StringBuffer和StringBuider构造一个String"><a href="#使用StringBuffer和StringBuider构造一个String" class="headerlink" title="使用StringBuffer和StringBuider构造一个String"></a><strong>使用StringBuffer和StringBuider构造一个String</strong></h3><p>作为String的两个“兄弟”，StringBuffer和StringBuider也可以被当做构造String的参数。</p>
+<p>但是当我们有了StringBuffer或者StringBuilfer对象之后可以直接使用他们的toString方法来得到String。</p>
+<h3 id="一个特殊的保护类型的构造方法"><a href="#一个特殊的保护类型的构造方法" class="headerlink" title="一个特殊的保护类型的构造方法"></a><strong>一个特殊的保护类型的构造方法</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String(<span class="keyword">char</span>[] value, <span class="keyword">boolean</span> share) &#123;</span><br><span class="line">    <span class="comment">// assert share : &quot;unshared not supported&quot;;</span></span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法和 <code>String(char[] value)</code>有两点区别，第一个，该方法多了一个参数： <code>boolean share</code>，其实这个参数在方法体中根本没被使用，也给了注释，目前不支持使用false，只使用true。那么可以断定，<strong>加入这个share的只是为了区分于String(char[] value)方法</strong>，不加这个参数就没办法定义这个函数，只有参数不能才能进行重载。那么，第二个区别就是具体的方法实现不同。我们前面提到过，<code>String(char[] value)</code>方法在创建String的时候会用到 会用到<code>Arrays</code>的<code>copyOf</code>方法将value中的内容逐一复制到String当中，而这个<code>String(char[] value, boolean share)</code>方法则是直接将value的引用赋值给String的value。那么也就是说，这个方法构造出来的String和参数传过来的<code>char[] value</code>共享同一个数组。 那么，为什么Java会提供这样一个方法呢？ 首先，我们分析一下使用该构造函数的好处：</p>
+<blockquote>
+<p>首先，<strong>性能好</strong>，这个很简单，一个是直接给数组赋值（相当于直接将String的value的指针指向char[]数组），一个是逐一拷贝。当然是直接赋值快了。</p>
+<p>其次，共享内部数组<strong>节约内存</strong></p>
+</blockquote>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><blockquote>
+<p>length() <strong>返回字符串长度</strong></p>
+<p>isEmpty() <strong>返回字符串是否为空</strong></p>
+<p>charAt(int index) <strong>返回字符串中第（index+1）个字符</strong></p>
+<p>char[] toCharArray() <strong>转化成字符数组</strong></p>
+<p>trim() <strong>去掉两端空格</strong></p>
+<p>toUpperCase() <strong>转化为大写</strong></p>
+<p>toLowerCase() <strong>转化为小写</strong></p>
+<p>String concat(String str) //<strong>拼接字符串</strong></p>
+<p>String replace(char oldChar, char newChar) //<strong>将字符串中的oldChar字符换成newChar字符</strong></p>
+<p>//<strong>以上两个方法都使用了<code>String(char[] value, boolean share)；</code></strong></p>
+<p>boolean matches(String regex) //<strong>判断字符串是否匹配给定的regex正则表达式</strong></p>
+<p>boolean contains(CharSequence s) //<strong>判断字符串是否包含字符序列s</strong></p>
+<p>String[] split(String regex, int limit) <strong>按照字符regex将字符串分成limit份。</strong></p>
+<p>String[] split(String regex)</p>
+</blockquote>
+<h3 id="getBytes"><a href="#getBytes" class="headerlink" title="getBytes"></a><strong>getBytes</strong></h3><p>在创建String的时候，可以使用byte[]数组，将一个字节数组转换成字符串，同样，我们可以将一个字符串转换成字节数组，那么String提供了很多重载的getBytes方法。但是，值得注意的是，在使用这些方法的时候一定要注意编码问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">&quot;你好，世界！&quot;</span>; </span><br><span class="line"><span class="keyword">byte</span>[] bytes = s.getBytes(<span class="string">&quot;utf-8&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="比较方法"><a href="#比较方法" class="headerlink" title="比较方法"></a>比较方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span>；</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">contentEquals</span><span class="params">(StringBuffer sb)</span>；</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">contentEquals</span><span class="params">(CharSequence cs)</span>；</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">equalsIgnoreCase</span><span class="params">(String anotherString)</span>；</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(String anotherString)</span>；</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">compareToIgnoreCase</span><span class="params">(String str)</span>；</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">regionMatches</span><span class="params">(<span class="keyword">int</span> toffset, String other, <span class="keyword">int</span> ooffset,<span class="keyword">int</span> len)</span>  <span class="comment">//局部匹配</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">regionMatches</span><span class="params">(<span class="keyword">boolean</span> ignoreCase, <span class="keyword">int</span> toffset,String other, <span class="keyword">int</span> ooffset, <span class="keyword">int</span> len)</span>   <span class="comment">//局部匹配</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode"></a><strong>hashCode</strong></h3><p>hashCode的实现其实就是使用数学公式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s[<span class="number">0</span>]*<span class="number">31</span>^(n-<span class="number">1</span>) + s[<span class="number">1</span>]*<span class="number">31</span>^(n-<span class="number">2</span>) + ... + s[n-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>s[i]是string的第i个字符，n是String的长度。那为什么这里用31，而不是其它数呢? 计算机的乘法涉及到移位计算。当一个数乘以2时，就直接拿该数左移一位即可！选择31原因是因为31是一个素数！</p>
+<h3 id="substring"><a href="#substring" class="headerlink" title="substring"></a><strong>substring</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">substring</span><span class="params">(<span class="keyword">int</span> beginIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (beginIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(beginIndex);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> subLen = value.length - beginIndex;</span><br><span class="line">    <span class="keyword">if</span> (subLen &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(subLen);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (beginIndex == <span class="number">0</span>) ? <span class="keyword">this</span> : <span class="keyword">new</span> String(value, beginIndex, subLen);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前面我们介绍过，java 7 中的substring方法使用String(value, beginIndex, subLen)方法创建一个新的String并返回，这个方法会将原来的char[]中的值逐一复制到新的String中，两个数组并不是共享的，虽然这样做损失一些性能，但是有效地避免了内存泄露。</p>
+<hr>
+<h3 id="replaceFirst、replaceAll、replace区别"><a href="#replaceFirst、replaceAll、replace区别" class="headerlink" title="replaceFirst、replaceAll、replace区别"></a><strong>replaceFirst、replaceAll、replace区别</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">replaceFirst</span><span class="params">(String regex, String replacement)</span></span></span><br><span class="line"><span class="function">String <span class="title">replaceAll</span><span class="params">(String regex, String replacement)</span></span></span><br><span class="line"><span class="function">String <span class="title">replace</span><span class="params">(CharSequence target, CharSequence replacement)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>1)replace的参数是char和CharSequence,即可以支持字符的替换,也支持字符串的替换 2)replaceAll和replaceFirst的参数是regex,即基于规则表达式的替换,比如,可以通过replaceAll(“\d”, “*”)把一个字符串所有的数字字符都换成星号; <strong>相同点是都是全部替换</strong>,即把源字符串中的某一字符或字符串全部换成指定的字符或字符串, <strong>如果只想替换第一次出现的,可以使用 replaceFirst()</strong>,这个方法也是基于规则表达式的替换,但与replaceAll()不同的是,只替换第一次出现的字符串; <strong>另外,如果replaceAll()和replaceFirst()所用的参数据不是基于规则表达式的,则与replace()替换字符串的效果是一样的,即这两者也支持字符串的操作;</strong></p>
+</blockquote>
+<h3 id="copyValueOf-和-valueOf"><a href="#copyValueOf-和-valueOf" class="headerlink" title="copyValueOf 和 valueOf"></a><strong>copyValueOf 和 valueOf</strong></h3><p>String的底层是由char[]实现的：通过一个char[]类型的value属性！早期的String构造器的实现呢，不会拷贝数组的，直接将参数的char[]数组作为String的value属性。然后<code>test[0] = &#39;A&#39;;</code>将导致字符串的变化。为了避免这个问题，提供了<code>copyValueOf</code>方法，每次都拷贝成新的字符数组来构造新的String对象。但是现在的String对象，在构造器中就通过拷贝新数组实现了，所以这两个方面在本质上已经没区别了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> b ? <span class="string">&quot;true&quot;</span> : <span class="string">&quot;false&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">char</span> data[] = &#123;c&#125;;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> String(data, <span class="keyword">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> Integer.toString(i);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">long</span> l)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> Long.toString(l);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">float</span> f)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> Float.toString(f);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">double</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Double.toString(d);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="intern-方法"><a href="#intern-方法" class="headerlink" title="intern()方法"></a><strong>intern()方法</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">intern</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>该方法返回一个字符串对象的内部化引用。 众所周知：String类维护一个初始为空的字符串的对象池，当intern方法被调用时，如果对象池中已经包含这一个相等的字符串对象则返回对象池中的实例，否则添加字符串到对象池并返回该字符串的引用。</p>
+<h3 id="String-valueOf和Integer-toString的区别"><a href="#String-valueOf和Integer-toString的区别" class="headerlink" title="String.valueOf和Integer.toString的区别"></a><strong>String.valueOf和Integer.toString的区别</strong></h3><p>接下来我们看以下这段代码，我们有三种方式将一个int类型的变量变成呢过String类型，那么他们有什么区别？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span><span class="keyword">int</span> i = <span class="number">5</span>;</span><br><span class="line"><span class="number">2.</span>String i1 = <span class="string">&quot;&quot;</span> + i;</span><br><span class="line"><span class="number">3.</span>String i2 = String.valueOf(i);</span><br><span class="line"><span class="number">4.</span>String i3 = Integer.toString(i);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>1、第三行和第四行没有任何区别，因为<code>String.valueOf(i)</code>也是调用<code>Integer.toString(i)</code>来实现的。 </p>
+<p>2、第二行代码其实是<code>String i1 = (new StringBuilder()).append(i).toString();</code>，首先创建一个StringBuilder对象，然后再调用append方法，再调用toString方法。</p>
+</blockquote>
+<h1 id="Enum"><a href="#Enum" class="headerlink" title="Enum"></a>Enum</h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/posts/39d23ebd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1726,7 +1859,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1780,7 +1913,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">90k</span>
+    <span title="站点总字数">96k</span>
 </div>
 
         
